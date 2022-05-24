@@ -1,0 +1,26 @@
+{% extends "../base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{% block content %}
+
+    <div class="">
+        <h2>Logg inn til TicketToCulture</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            {# Display django.contrib.messages as Bootstrap alerts #}
+            {% bootstrap_messages %}
+
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Logg inn
+                </button>
+            {% endbuttons %}
+        </form>
+        <p class="text-center">Har du ikke bruker? <a href="/signup">Lag en bruker her</a>.</p>
+  </div>
+
+{% endblock content %}

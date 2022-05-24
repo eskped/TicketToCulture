@@ -1,0 +1,49 @@
+{% extends "../base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{% block content %}
+
+    <div>
+        <h2>Profil:</h2>
+
+        {% if user.profile.image %}
+            <img src="{{ user.profile.image.url }}" alt="img" style="max-height: 10rem;" />
+        {% else %}
+            <img src="/media/default_profile_image.jpg"
+                 alt="img"
+                 style="max-height: 10rem;"/>
+        {% endif %}
+        <br>
+        <br>
+        <p style="font-weight: 600;">Vurdering fra andre brukere: {{ score }}</p>
+        <p>
+
+            Brukernavn: {{ username }}
+            <br>
+        </p>
+    </div>
+
+    <div class="form-content">
+        <form method="post" enctype="multipart/form-data" action="" class="form">
+            {% csrf_token %}
+            {% bootstrap_form user_form %}
+            {% bootstrap_form profile_form %}
+
+            {# Display django.contrib.messages as Bootstrap alerts #}
+            {% bootstrap_messages %}
+            <br>
+            <br>
+            <button type="submit" class="btn btn-dark btn-lg", style="background-color:#0d6efd; color: white">Lagre endringer</button>
+            <a href="/change-password" class="btn btn-dark btn-lg" style="background-color:#0d6efd; color: white">Endre passord</a>
+            
+        </form>
+    </div>
+
+
+{% endblock content %}
+
+
+
+

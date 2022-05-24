@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{% block content %}
+    <h2>Opprett ny annonse</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                Opprett annonse
+            </button>
+        {% endbuttons %}
+    </form>
+{% endblock %}

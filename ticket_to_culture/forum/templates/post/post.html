@@ -1,0 +1,99 @@
+{% extends "../base.html" %}
+{# Load the tag library #}
+{% load bootstrap5 %}
+{% block content %}
+    <div>
+        <button class="btn btn-primary" onclick="window.location.href='/'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Tilbake
+        </button>
+        <div class="row container">
+            <div class="col-8">
+                <div>
+                    <h2>{{ post.title }}</h2>
+                    </p>
+                    <div style="float: right; padding-right: 400px;">
+                        <a class="link-secondary" href="mailto:{{ post.user.email }}"> Kontakt annonsør </a>
+                        <!-- TODO: Send email here    -->
+                    </div>
+                    <div>
+                        <p style="font-size: large; font-weight: 500;">
+                            Pris: {{ post.price }} kr
+                        </p>
+                    </div>
+                    {% if post.image %}
+                        <img
+                                src="{{ post.image.url }}"
+                                alt="post image"
+                                height="300"
+                                class="border rounded"
+                                style="object-fit: cover; margin-bottom: 40px;  max-width: 700px;"
+                        />
+                    {% else %}
+                        <img
+                                src="https://nasijagaltangsel.websites.co.in/dummytemplate/img/product-placeholder.png"
+                                alt="post image"
+                                height="300"
+                                class="border rounded"
+                                style="object-fit: cover; margin-bottom: 40px;  max-width: 700px;"
+                        />
+                    {% endif %}
+                    <div>
+                        <p>
+                            {{ post.description }}
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Billett-type: {{ post.type }}
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Lokasjon: {{ post.location }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div style="float: right; border-left: 2px solid lightgrey; padding-left: 50px; margin-right: 100px;">
+                    <p>
+                    <h2>Annonsør</h2>
+                    </p>
+                    <div>
+                        <p>
+                            Bruker: {{ post.user.username }}
+                        </p>
+                    </div>
+                    <img
+                            src="{{ post.user.profile.image.url }}"
+                            alt="user image"
+                            height="100"
+                            class="border rounded"
+                            style="object-fit: cover; margin-bottom: 50px;"
+                    />
+                    <div>
+                        <p>Rating:
+                            <span style="font-weight: 500;">{{ seller_rating }}</span>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Tlf. nummer: {{ post.user.profile.phone }}
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            E-post: {{ post.user.email }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

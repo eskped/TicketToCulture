@@ -1,0 +1,23 @@
+{% extends "../base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{% block content %}
+    <div class="">
+        <h2>Lag ny bruker på TicketToCulture</h2>
+        <form method="post" enctype="multipart/form-data" action="" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            {# Display django.contrib.messages as Bootstrap alerts #}
+            {% bootstrap_messages %}
+
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Registrer bruker
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}

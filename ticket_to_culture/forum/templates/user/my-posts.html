@@ -1,0 +1,124 @@
+{% extends "../base.html" %} {% block content %}
+<div class="container">
+  {% if ratings_available|length > 0 %}
+      {% comment %} Tilgjengelige vurderinger {% endcomment %}
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-body">
+            <h5 class="card-title">Vurderinger du kan gi</h5>
+            {% for v in ratings_available %}
+            <div
+              class=""
+              style="
+                padding: 1rem;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                background: #dfeaed;
+              "
+            >
+              <h5
+                style="margin-bottom: 0px; padding-bottom: 0px; display: inline-block"
+              >
+                {{ v.rated_by_user.username }} solgte deg {{ v.post.title }}
+              </h5>
+              <form
+                action="{% url 'forum:rateSeller' v.id %}"
+                method="GET"
+                class="form-group"
+                style="padding: 0; margin: 0"
+              >
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary" value="Vurder selger" />
+              </form>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+  {% endif %}
+
+  {% comment %} Aktive annonser {% endcomment %}
+  <h2>Mine aktive annonser:</h2>
+  {% for p in active_posts %}
+  <div class="card bg-dark text-white" style="margin-bottom: 2rem">
+    <img
+      class="card-img"
+      {% if p.image  %}
+      src="{{ p.image.url }}"
+      {% else  %}
+      src="https://nasijagaltangsel.websites.co.in/dummytemplate/img/product-placeholder.png"
+      {% endif %}
+      
+      alt="Card image"
+      style="
+        background-size: cover;
+        background-repeat: no-repeat;
+        max-height: 20rem;
+        object-fit: cover;
+      "
+    />
+    <div
+      class="card-img-overlay"
+      style="
+        text-shadow: 1px 1px 4px #000;
+        display: flex;
+        justify-content: space-between;
+      "
+    >
+      <div>
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text">{{ p.description }}</p>
+      </div>
+
+      <form action="{% url 'forum:rateBuyerSearch' p.id %}" method="GET">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Marker som solgt" />
+      </form>
+    </div>
+  </div>
+  {% endfor %} {% comment %} Gamle, arkiverte annonser {% endcomment %}
+  <h2>Arkiverte annonser:</h2>
+  {% for p in old_posts %}
+  <div class="card bg-dark text-white" style="margin-bottom: 2rem">
+    <img
+      class="card-img"
+      {% if p.image %}
+      src="{{ p.image.url }}"
+      {% else %}
+      src="https://nasijagaltangsel.websites.co.in/dummytemplate/img/product-placeholder.png"
+      {% endif %}
+
+      alt="Card image"
+      style="
+        background-size: cover;
+        background-repeat: no-repeat;
+        max-height: 20rem;
+        object-fit: cover;
+      "
+    />
+    <div
+      class="card-img-overlay"
+      style="
+        text-shadow: 1px 1px 4px #000;
+        display: flex;
+        justify-content: space-between;
+      "
+    >
+      <div>
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text">{{ p.description }}</p>
+      </div>
+
+      <form action="{% url 'forum:undoSoldPost' p.id %}" method="GET">
+        {% csrf_token %}
+        <input
+          type="submit"
+          class="btn btn-primary"
+          value="Fjern 'solgt'-markering"
+        />
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

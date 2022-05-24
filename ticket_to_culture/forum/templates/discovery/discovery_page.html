@@ -1,0 +1,112 @@
+{% extends "../base.html" %} 
+{# Load the tag library #} 
+{% load bootstrap5 %} 
+{% block content %}
+
+<head>
+    <style>
+
+        .flex-container {
+            width: 100%;
+            margin: 15px;
+        }
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .flex-column-filter {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            padding-right: 2%;
+            border: 0px solid lightgreen;
+        }
+
+        
+        </style>
+</head>
+
+
+<div class="flex-container">
+    <div>
+        <h1 class ="p-4 d-flex justify-content-center"></h1>
+    </div>
+    <div class="flex-row">
+        <div class="flex-column-filter">
+            <form method="POST" onchange="this.form.submit()" style="display: flex; flex-direction: column;">
+                {% csrf_token %}
+                {{ form }}
+
+                <input type="Submit" name="submit" value="Submit", style="background-color:#0d6efd; color: white">
+            </form>
+        </div>
+        <div class="flex-column">
+            <div class="row container">
+                {% for post in post_list %}
+                <div class="col-sm d-flex justify-content-center" style="padding: 0; margin: 0;">
+                    <ul class="border p-3 shadow-sm rounded " style="list-style: none; display: inline-block; background-color: #FDFDFD;" > 
+                        <li style="white-space: nowrap;">
+                            <div style="display: inline-block;">
+                                <p>{{ post.user.username }}</p>
+                            </div> 
+                            <div style="float: right;">
+                                <!-- <a class="link-secondary" href="mailto: {{ post.user.email }}"> Kontakt </a> <!-- TODO: Link to post-view here     -->
+                            </div> 
+                        </li>
+                        <li >
+                            <h4>{{ post.title }}</h4>
+                        </li>
+                        <li >
+                            {% if post.image %}
+                            <img
+                                src="{{ post.image.url }}"
+                                alt="post image"
+                                width="270"
+                                height="180"
+                                class="border rounded"
+                                style="object-fit: cover;"
+                            />
+                            {% else %}
+                            <img
+                                src="https://nasijagaltangsel.websites.co.in/dummytemplate/img/product-placeholder.png"
+                                alt="post image"
+                                width="300"
+                                height="200"
+                                class="border rounded"
+                                style="object-fit: cover;"
+                            />
+                            {% endif %}
+                        </li>
+
+                        <li>
+                            <p>Arrangement: {{ post.type }}</p>
+                        </li>
+                        <li>
+                            <p>Lokasjon: {{ post.location }}</p> 
+                        </li>
+                        <li >
+                            <div style="display: inline-block;">
+                                <p>Pris: {{ post.price }} kr</p>
+                            </div>
+                            <div style="float: right;">
+                                <button onClick = "window.location.href='/post/{{post.id}}'" type="button" class="btn btn-primary">Se annonse</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div> 
+                {% if forloop.counter|divisibleby:3 %} 
+            </div>
+            <div class="row container">
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

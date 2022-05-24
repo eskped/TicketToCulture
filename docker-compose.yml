@@ -1,0 +1,24 @@
+version: '3.1'
+services:
+  database:
+    image: "postgres" # use latest official postgres version
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ttc
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    ports:
+      - 5431:5432
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: test
+    ports:
+      - "5050:80"
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose

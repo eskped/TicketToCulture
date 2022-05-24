@@ -1,0 +1,65 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# load static files #}
+{% load static %}
+
+<Navbar>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="{% static 'forum/ttc-logo.svg' %}" alt="logo"
+                                                  style="max-height: 3rem"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav mr-auto"  style="width: 200%">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Utforsk</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/my-posts">Mine annonser</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createPost">Lag innlegg</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto" style="width: 30%">
+                        <li class="nav-item" >
+                            <a class="nav-link" href="/profile">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signout">Logg ut</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav mr-auto" style="width: 70%">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signin">Logg inn</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</Navbar>
+
+<div style="margin-top: 3rem;" class="container">
+    {% block content %}
+
+    {% endblock content %}
+</div>
+
+<Footer>
+    <div style="margin-top: 3rem; padding-top: 2rem; padding-bottom: 2rem; background-color: #eeeeee;">
+        <div class="container">
+            <p style="color: #2c2c2c;">TicketToCulture</p>
+        </div>
+    </div>
+</Footer>

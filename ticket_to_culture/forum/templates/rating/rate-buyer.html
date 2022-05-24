@@ -1,0 +1,99 @@
+{% extends "../base.html" %} {% block content %}
+
+<form
+  action="{% url 'forum:rateBuyer' sold_id buyer_id %}"
+  method="POST"
+  class="form-group"
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  {% csrf_token %}
+
+  <h4>Ønsker du å gi vurdering til kjøperen?</h4>
+
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0.1rem;
+      margin-top: 1rem;
+    "
+  >
+    <input type="radio" id="one" name="rating" value="1" required />
+    <label for="one"><h3>1</h3></label>
+
+    <input
+      type="radio"
+      id="two"
+      name="rating"
+      value="2"
+      style="margin-left: 1rem"
+    />
+    <label for="two"><h3>2</h3></label>
+
+    <input
+      type="radio"
+      id="three"
+      name="rating"
+      value="3"
+      style="margin-left: 1rem"
+    />
+    <label for="three"><h3>3</h3></label>
+
+    <input
+      type="radio"
+      id="four"
+      name="rating"
+      value="4"
+      style="margin-left: 1rem"
+    />
+    <label for="four"><h3>4</h3></label>
+
+    <input
+      type="radio"
+      id="five"
+      name="rating"
+      value="5"
+      style="margin-left: 1rem"
+    />
+    <label for="five"><h3>5</h3></label>
+  </div>
+
+  <p
+    style="
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      color: rgb(156 163 175);
+    "
+  >
+    Gi en vurdering der 1 er dårligst og 5 er best.
+  </p>
+
+  <input
+    type="submit"
+    class="btn btn-primary"
+    value="Gi vurdering"
+    style="margin-top: 1rem"
+  />
+</form>
+<form
+  action="{% url 'forum:sellPost' sold_id %}"
+  method="POST"
+  class="form-group"
+  style="display: flex; justify-content: center; align-items: center"
+>
+  {% csrf_token %}
+  <input
+    type="submit"
+    class="btn btn-sm btn-danger"
+    value="Ikke vurder kjøper"
+  />
+</form>
+
+{% endblock content %}

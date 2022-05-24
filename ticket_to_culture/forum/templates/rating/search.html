@@ -1,0 +1,22 @@
+{% extends "../base.html" %}
+{% block content %}
+
+    <form action="{% url 'forum:rateBuyerSearch' sold_id %}" method="POST" class="form-group" style="display: flex; flex-direction: row;">
+        {% csrf_token %}
+        <input type="text" placeholder="Skriv brukernavnet til kjøperen" class="form-control" name="search" id="search" style="margin-right: 1rem;"/>
+        <input type="submit" class="btn btn-primary" value="Søk etter bruker"/>
+    </form>
+
+    {% if results %}
+        {% for r in results %}
+            <div class="" style="padding: 1rem; display: flex; flex-direction: row; justify-content: space-between; align-items:center; background: #dfeaed;" >
+                <h5 style="margin-bottom: 0px; padding-bottom: 0px; display: inline-block;">{{ r.username }}</h5>
+                <form action="{% url 'forum:rateBuyer' sold_id r.id %}" method="GET" class="form-group" style="padding: 0; margin: 0;" >
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary" value="Velg" />
+                </form>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}
